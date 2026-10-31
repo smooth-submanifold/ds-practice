@@ -13,12 +13,12 @@ Array create(void)
 {
     Array A=(Array)malloc(sizeof(struct Arr));
     if(!A){
-        printf("Allocating failed.\n");
+        printf("create:Allocate failed.\n");
         return NULL;
     }
     A->arr=(int*)malloc(sizeof(int));
     if(!A->arr){
-        printf("Allocating failed.\n");
+        printf("create:Allocate failed.\n");
         free(A);
         return NULL;
     }
@@ -35,13 +35,14 @@ void push(Array A,int num)
         return ;
     }
     if (A->size==A->cap){
-        A->cap*=2;
-        int *tmp = realloc(A->arr, A->cap * sizeof(int));
-        if (!tmp) A->arr = tmp;
-        else{
-            printf("Allocating failed.\n");
-            return ;
+        int newcap=A->cap*2;
+        int *tmp = realloc(A->arr, newcap * sizeof(int));
+        if (!tmp) {
+            printf("push:Realloc failed");
+            return;
         }
+        A->arr=tmp;
+        A->cap=newcap;
     }
     A->arr[A->size]=num;
     A->size++;
@@ -54,16 +55,21 @@ int pop(Array A)
         return 0;
     }
     if(A->size==0){
-        printf("Element does not exist.\n");
+        printf("pop:Element does not exist.\n");
+        return 0;
     }
     int v=A->arr[A->size-1];
     A->size--;
     if (4*A->size<=A->cap && A->cap>1){
-        A->cap/=2;
-        int *tmp = realloc(A->arr, A->cap * sizeof(int));
-        if (!tmp) A->arr = tmp;
+        int newcap=A->cap/2;
+        int *tmp = realloc(A->arr, newcap * sizeof(int));
+        if (!tmp) {
+            printf("pop:Realloc failed");
+            return 0;
+        }
+        A->arr=tmp;
+        A->cap=newcap;
     }
-    printf("%d",A->arr[A->size]);
     return v;
 }
 
@@ -73,11 +79,11 @@ int get(Array A,int index)
         printf("Array does not exist.\n");
         return 0;
     }
-    if (index>0 && index<A->size){
+    if (index>=0 && index<A->size){
         printf("%d",A->arr[index]);
         return A->arr[index];
     }else{
-        printf("Element does not exist\n");
+        printf("get:Element does not exist\n");
         return 0;
     }
 }
@@ -91,6 +97,18 @@ int  cap(Array A)
 {
     return A->cap;
 }
+
+void test(Array A)
+{
+    for (int i=0;i<100000;i++){
+        push(A,i);
+    }
+    for (int i=100000;i>99990;i--){
+        int v=pop(A);
+        printf("%d\n",v);
+    }
+}
+
 
 int main(void)
 {
@@ -119,6 +137,7 @@ int main(void)
             printf("%d\n",num);
         }
     }
+    //test(A);
     free(A->arr);
     free(A);
     return 0;
