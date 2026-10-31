@@ -42,38 +42,40 @@ Link Invert1(Link head)
         printf("Invert1:link does not exist.\n");
         return NULL;
     }
-    Link behind=head;
-    Link pres=behind->next;
+    Link behind;
+    Link pres=head->next;
     Link front=pres->next;
-    free(behind);
     pres->next=NULL;
-    if(!front){
-        return pres;
-    }
     while(front){
         behind=pres;
         pres=front;
         front=front->next;
         pres->next=behind;
     }
-    front=create();
-    front->num=0;
-    front->next=pres;
-    return front;
+    head->next=pres;
+    return head;
+}
+
+Link reverse(Link subhead)
+{
+    if(!subhead->next){
+        return subhead;
+    }
+    Link tmp=reverse(subhead->next);
+    while(tmp->next){
+        tmp=tmp->next;
+    }
+    tmp->next=subhead;
+    return reverse(subhead);
 }
 
 Link Invert2(Link head)
 {
-    if(!head || ! head->next){
-        printf("Invert2:link does not exist.\n");
-        return NULL;
-    }
-    if(head->next->next==NULL){
-        return head;
-    }
-    head->next=Invert2(head->next);
+    if(!head) return NULL;
+    head->next==reverse(head->next);
     return head;
 }
+
 void PrintLink(Link L)
 {
     L=L->next;
@@ -96,6 +98,8 @@ int main()
     }
     Link res1=Invert1(head);
     PrintLink(res1);
+    head=Invert1(head);
+    PrintLink(head);
     Link res2=Invert2(head);
     PrintLink(res2);
 }
