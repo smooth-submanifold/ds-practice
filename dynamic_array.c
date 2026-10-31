@@ -105,7 +105,7 @@ void test(Array A)
     for (int i=100000;i>10;i--){
         int v=pop(A);
     }
-    printf("%d",cap)
+    printf("%d",A->cap);
 }
 
 
