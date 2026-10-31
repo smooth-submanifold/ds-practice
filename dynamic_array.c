@@ -29,7 +29,6 @@ Array create(void)
 
 void push(Array A,int num)
 {
-    int *tmp;
     if (!A){
         printf("Array does not exist.\n");
         return ;
@@ -65,7 +64,7 @@ int pop(Array A)
         int *tmp = realloc(A->arr, newcap * sizeof(int));
         if (!tmp) {
             printf("pop:Realloc failed");
-            return 0;
+            return v;
         }
         A->arr=tmp;
         A->cap=newcap;
@@ -80,7 +79,7 @@ int get(Array A,int index)
         return 0;
     }
     if (index>=0 && index<A->size){
-        printf("%d",A->arr[index]);
+        printf("%d\n",A->arr[index]);
         return A->arr[index];
     }else{
         printf("get:Element does not exist\n");
@@ -90,7 +89,7 @@ int get(Array A,int index)
 
 int size(Array A)
 {
-    return A->cap;
+    return A->size;
 }
 
 int  cap(Array A)
@@ -103,10 +102,10 @@ void test(Array A)
     for (int i=0;i<100000;i++){
         push(A,i);
     }
-    for (int i=100000;i>99990;i--){
+    for (int i=100000;i>10;i--){
         int v=pop(A);
-        printf("%d\n",v);
     }
+    printf("%d",cap)
 }
 
 
