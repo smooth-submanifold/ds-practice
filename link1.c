@@ -62,13 +62,9 @@ Link reverse(Link subhead)
         return subhead;
     }
     Link tmp=reverse(subhead->next);
-    Link newhead =tmp;
-    while(tmp->next){
-        tmp=tmp->next;
-    }
-    tmp->next=subhead;
+    subhead->next->next=subhead;
     subhead->next=NULL;
-    return newhead;
+    return tmp;
 }
 
 Link Invert2(Link head)
@@ -80,6 +76,10 @@ Link Invert2(Link head)
 
 void PrintLink(Link L)
 {
+    if(!L || !L->next){
+        printf("PrintLink:Link does not exist.\n");
+        return;
+    }
     L=L->next;
     while(L){
         printf("%d ",L->num);
@@ -88,20 +88,38 @@ void PrintLink(Link L)
     printf("\n");
 }
 
+void FreeLink(Link L)
+{
+    if(!L || !L->next){
+        printf("PrintLink:Link does not exist.\n");
+        return;
+    }
+    Link rear=L;
+    Link front=L;
+    while(front){
+        front=front->next;
+        free(rear);
+        rear=front;
+    }
+}
+
 int main()
 {
     int N,n;
     scanf("%d",&N);
     Link head=create();
     Link rear=head;
+    if(!N){
+        printf("Blank input.\n");
+        return 1;
+    }
     while (N--){
         scanf("%d",&n);
         Insert(&rear,n);
     }
-    Link res1=Invert1(head);
-    PrintLink(res1);
     head=Invert1(head);
     PrintLink(head);
-    Link res2=Invert2(head);
-    PrintLink(res2);
+    head=Invert2(head);
+    PrintLink(head);
+    FreeLink(head);
 }
