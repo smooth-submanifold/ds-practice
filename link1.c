@@ -62,17 +62,19 @@ Link reverse(Link subhead)
         return subhead;
     }
     Link tmp=reverse(subhead->next);
+    Link newhead =tmp;
     while(tmp->next){
         tmp=tmp->next;
     }
     tmp->next=subhead;
-    return reverse(subhead);
+    subhead->next=NULL;
+    return newhead;
 }
 
 Link Invert2(Link head)
 {
-    if(!head) return NULL;
-    head->next==reverse(head->next);
+    if(!head || !head->next) return NULL;
+    head->next=reverse(head->next);
     return head;
 }
 
