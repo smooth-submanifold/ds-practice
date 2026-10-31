@@ -90,7 +90,7 @@ void PrintLink(Link L)
 
 void FreeLink(Link L)
 {
-    if(!L || !L->next){
+    if(!L){
         printf("PrintLink:Link does not exist.\n");
         return;
     }
@@ -106,13 +106,17 @@ void FreeLink(Link L)
 int main()
 {
     int N,n;
-    scanf("%d",&N);
-    Link head=create();
-    Link rear=head;
-    if(!N){
+    int res=scanf("%d",&N);
+    if(res){
+        printf("Invalid input.");
+        return 0;
+    }
+    if(N<=0){
         printf("Blank input.\n");
         return 1;
     }
+    Link head=create();
+    Link rear=head;
     while (N--){
         scanf("%d",&n);
         Insert(&rear,n);
