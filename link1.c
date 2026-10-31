@@ -107,7 +107,7 @@ int main()
 {
     int N,n;
     int res=scanf("%d",&N);
-    if(res){
+    if(!res){
         printf("Invalid input.");
         return 0;
     }
