@@ -19,7 +19,7 @@ Array create(void)
     A->arr=(int*)malloc(sizeof(int));
     if(!A->arr){
         printf("Allocating failed.\n");
-        free(A)
+        free(A);
         return NULL;
     }
     A->size=0;
@@ -29,14 +29,14 @@ Array create(void)
 
 void push(Array A,int num)
 {
-    int num;
+    int *tmp;
     if (!A){
         printf("Array does not exist.\n");
         return ;
     }
     if (A->size==A->cap){
         A->cap*=2;
-        int *tmp = realloc(A->arr, cap * sizeof(int));
+        int *tmp = realloc(A->arr, A->cap * sizeof(int));
         if (!tmp) A->arr = tmp;
         else{
             printf("Allocating failed.\n");
@@ -58,9 +58,9 @@ int pop(Array A)
     }
     int v=A->arr[A->size-1];
     A->size--;
-    if (4*A->size<=A->cap && cap>1){
+    if (4*A->size<=A->cap && A->cap>1){
         A->cap/=2;
-        int *tmp = realloc(A->arr, cap * sizeof(int));
+        int *tmp = realloc(A->arr, A->cap * sizeof(int));
         if (!tmp) A->arr = tmp;
     }
     printf("%d",A->arr[A->size]);
@@ -82,14 +82,14 @@ int get(Array A,int index)
     }
 }
 
-void size(Array A)
+int size(Array A)
 {
-    printf("%d",A->size);
+    return A->cap;
 }
 
-void cap(Array A)
+int  cap(Array A)
 {
-    printf("%d",A->cap);
+    return A->cap;
 }
 
 int main(void)
@@ -102,21 +102,22 @@ int main(void)
         scanf("%s",oper);
         if (strcmp(oper,"push")==0){
             int num;
-            scanf("%d",&num)
+            scanf("%d",&num);
             push(A,num);
         }else if(strcmp(oper,"pop")==0){
             int num=pop(A);
-            printf("%d",num);
+            printf("%d\n",num);
         }else if(strcmp(oper,"get")==0){
             int index;
-            scanf("%d",&index)
+            scanf("%d",&index);
             get(A,index);
         }else if(strcmp(oper,"cap")==0){
             int num=cap(A);
-            printF("%d",num);
+            printf("%d\n",num);
         }else if(strcmp(oper,"size")==0){
             int num=size(A);
-            printf("%d",num);
+            printf("%d\n",num);
+        }
     }
     free(A->arr);
     free(A);
