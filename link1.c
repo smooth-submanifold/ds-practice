@@ -105,7 +105,7 @@ void FreeLink(Link L)
 
 int main()
 {
-    int N,n;
+    int N=0,n;
     int res=scanf("%d",&N);
     if(!res){
         printf("Invalid input.");
