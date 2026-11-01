@@ -7,7 +7,8 @@ struct CircleNode//环形队列
 {
     int *arr;
     int front,rear;
-    int size;
+    int cap;
+    int count;
 };
 
 Circle createC(int n)//创建环形队列
@@ -20,7 +21,8 @@ Circle createC(int n)//创建环形队列
     C->arr=(int *)malloc(n*sizeof(int));
     C->front=0;
     C->rear=0;
-    C->size=n;
+    C->cap=n;
+    C->count=0;
     return C;
 }
 
@@ -30,13 +32,14 @@ void enqueue(Circle C,int num)//入队
         printf("enqueue:Circle does not exist\n");
         return;
     }
-    if((C->rear-C->front+1)%C->size==0){
-        printf("Circle is full.\n");
+    if(C->count==C->cap){
+        printf("FULL\n");
         return;
     }
-    C->arr[C->rear%C->size]=num;
+    C->arr[C->rear%C->cap]=num;
     C->rear++;
-    C->rear%=C->size;
+    C->rear%=C->cap;
+    C->count++;
     return;
 }
 
@@ -47,13 +50,14 @@ void dequeue(Circle C)
         printf("dequeue:circle does not exist\n");
         return;
     }
-    if((C->rear-C->front)%C->size==0){
+    if(C->count==0){
         printf("NA\n");
         return;
     }
     printf("%d\n",C->arr[C->front]);
     C->front++;
-    C->front%=C->size;
+    C->front%=C->cap;
+    C->count--;
     return;
 }
 
@@ -63,7 +67,7 @@ void size(Circle C)
         printf("size:circle does not exist\n");
         return;
     }
-    printf("%d\n",(C->rear-C->front)%C->size);
+    printf("%d\n",C->count);
     return;
 }
 
@@ -73,7 +77,7 @@ void empty(Circle C)
         printf("empty:circle does not exist\n");
         return;
     }
-    if((C->rear-C->front)%C->size==0){
+    if(C->count==0){
         printf("YES\n");
     }else{
         printf("NO\n");
@@ -87,7 +91,7 @@ void full(Circle C)
         printf("full:circle does not exist\n");
         return;
     }
-    if((C->rear-C->front+1)%C->size==0){
+    if(C->count==C->cap){
         printf("YES\n");
     }else{
        printf("NO\n");
