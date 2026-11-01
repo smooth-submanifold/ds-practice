@@ -78,7 +78,6 @@ Link Merge(Link h1,Link h2)
 {
     Link h=h1;
     Link r=h2->next;
-    free(h2);
     h1=h1->next;
     h2=r;
     r=h;
@@ -105,15 +104,16 @@ Link Merge(Link h1,Link h2)
 
 int main()
 {
-    int n1,n2;
+    int n1=0,n2=0;
     int res=scanf("%d %d",&n1,&n2);
-    if(n1<0 || n2<0 || res<2){
+    if(res<2 || n1<0 || n2<0){
         printf("Invalid input\n");
         return 1;
     }
     Link h1=ScanLink(n1);
     Link h2=ScanLink(n2);
     Link h=Merge(h1,h2);
+    free(h2);
     PrintLink(h);
     FreeLink(h);
     return 0;
