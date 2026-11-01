@@ -110,9 +110,9 @@ int main()
         }
     }
     if(valid){
-        printf("YES");
+        printf("YES\n");
     }else{
-        printf("NO");
+        printf("NO\n");
     }
     Free(S);
     return 0;
