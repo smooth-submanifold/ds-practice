@@ -84,6 +84,7 @@ int main()
 {
     char c='\0';
     Stack S=create();
+    int valid=1;
     while(scanf(" %c",&c)==1){
         if(c=='('){
             push(S,1);
@@ -92,17 +93,26 @@ int main()
         }else if(c=='{'){
             push(S,3);
         }else if(c==')'){
-            if(!check(S,1)) break;
+            if(!check(S,1)){
+                valid=0;
+                break;
+            }
         }else if(c==']'){
-            if(!check(S,2)) break;
+            if(!check(S,2)){
+                valid=0;
+                break;
+            }
         }else if(c=='}'){
-            if(!check(S,3)) break;
+            if(!check(S,3)){
+                valid=0;
+                break;
+            }
         }
     }
-    if(S->rear!=0){
-        printf("NO");
-    }else{
+    if(valid){
         printf("YES");
+    }else{
+        printf("NO");
     }
     Free(S);
     return 0;
