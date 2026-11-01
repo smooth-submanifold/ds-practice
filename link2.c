@@ -12,7 +12,7 @@ Link create()
 {
     Link L=(Link)malloc(sizeof(struct Node));
     if(!L){
-        printf("create:malloc failed");
+        printf("create:malloc failed\n");
         return NULL;
     }
     L->num=0;
@@ -23,7 +23,7 @@ Link create()
 void Insert(Link *pr,int num)
 {
     if(!(*pr)){
-        printf("Insert:link does not exist");
+        printf("Insert:link does not exist\n");
         return ;
     }
     (*pr)->next=create();
@@ -35,21 +35,22 @@ void Insert(Link *pr,int num)
 void PrintLink(Link head)
 {
     if(!(head)){
-        printf("PrintLink:link does not exist");
+        printf("PrintLink:link does not exist\n");
         return ;
     }
     head=head->next;
     while(head){
-        printf("%d",head->num);
+        printf("%d ",head->num);
         head=head->next;
     }
+    printf("\n");
     return ;
 }
 
 void FreeLink(Link head)
 {
     if(!(head)){
-        printf("FreeLink:link does not exist");
+        printf("FreeLink:link does not exist\n");
         return ;
     }
     Link tmp=head->next;
@@ -71,11 +72,11 @@ int main()
     }
     Link head=create();
     Link rear=head;
-    for(int i=1;i<=n-k;i++){
-        scanf("%d",&num);
-        Insert(&rear,num);
-    }
-    for(int i=n-k+1;i<=n;i++){
+    for(int i=1;i<=n;i++){
+        if(i==n-k+1){
+            scanf("%d",&num);
+            continue;
+        }
         scanf("%d",&num);
         Insert(&rear,num);
     }
