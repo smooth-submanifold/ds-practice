@@ -109,7 +109,7 @@ int main()
             }
         }
     }
-    if(valid){
+    if(valid && S->rear==0){
         printf("YES\n");
     }else{
         printf("NO\n");
