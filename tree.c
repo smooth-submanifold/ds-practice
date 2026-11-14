@@ -20,25 +20,17 @@ Tree create()
     return T;
 }
 
-Tree build(Tree T)
+Tree build()
 {
     char t=0;
 
-    if(!T){
-        return NULL;
-    }
-    scanf(" %c",&t);
-    if(t>='0' && t<='9'){
-        T->v=(int)(t-'0');
-        T->left=create();
-        T->left=build(T->left);
-        T->right=create();
-        T->right=build(T->right);
-    }else if(t=='#'){
-        T=NULL;
-    }else{
-        T=NULL;//非法输入
-    }
+    if(scanf(" %c",&t)!=1) return NULL;
+    if(t<'0' || t>'9') return NULL;
+    Tree T=create();
+    if(!T) return NULL;
+    T->v=t-'0';
+    T->left=build();
+    T->right=build();
     return T;
 }
 
@@ -115,29 +107,23 @@ int nodes(Tree T)
 
 void Free(Tree T)
 {
-    if(!T){
-        return;
-    }
-    if(!T->left && !T->right){
-        free(T);
-        return;
-    }
-    else{
-        Free(T->left);
-        Free(T->right);
-        return;
-    }
+    if(!T) return;
+    Free(T->left);
+    Free(T->right);
+    free(T);
+    return;
 }
 
 int main()
 {
-    Tree T=create();
-    T=build(T);
+    Tree T;
+    T=build();
     printf("pre:");pre(T);printf("\n");
     printf("in:");in(T);printf("\n");
     printf("post:");post(T);printf("\n");
     printf("height: %d\n",height(T));
     printf("leaves: %d\n",leaves(T));
     printf("nodes: %d\n",nodes(T));
+    Free(T);
     return 0;
 }
