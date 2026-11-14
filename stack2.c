@@ -3,13 +3,12 @@
 #include<stdlib.h>
 #define maxsize 10
 
-typedef struct StackNode *Stack;
-struct StackNode
+typedef struct StackNode
 {
     int *arr;
     int rear;
     int cat;
-};
+} *Stack;
 
 Stack create()
 {
@@ -140,7 +139,9 @@ int main()
     }else if(S->rear!=1){
         printf("Invalid formula\n");
     }else if(cal==0){
-        printf("%d",S->arr[0]);
+        int res;
+        pop(S,&res);
+        printf("%d\n",res);
     }
     Free(S);
     return 0;
