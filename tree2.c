@@ -220,40 +220,31 @@ void FreeC(Circle C)
     return;
 }
 
-
-void level(Circle C)//打印这一层，直到遇到NULL
-{
-    Tree T;
-    while(1){
-        T=dequeue(C);
-        if(!T) break;
-        printf(" %d",T->v);
-        if(!T->left) enqueue(C,T->left);
-        if(!T->right) enqueue(C,T->right);
-    }
-    enqueue(C,NULL);
-    return;
-}
-
-void TreeLevel(Tree T)
+void LevelPrint(Tree T)
 {
     Circle C;
-    C=createC(leaves(T)+1);
-    enqueue(C,T);enqueue(C,NULL);
-    int h=height(T);
-    for(int i=1;i<=h;i++){
-        printf("level %d:",i);
-        level(C);
+    int levelNo=1;
+    C=createC(nodes(T)+2);
+    enqueue(C,T);
+    while(C->count>0){
+        int n=C->count;
+        printf("level %d:",levelNo++);
+        while(n--){
+            Tree t=dequeue(C);
+            printf(" %d",t->v);
+            if(t->left) enqueue(C,t->left);
+            if(t->right) enqueue(C,t->right);
+        }
         printf("\n");
     }
-        FreeC(C);
+    FreeC(C);
 }
 
 int main()
 {
     Tree T;
     T=buildT();
-    TreeLevel(T);
+    LevelPrint(T);
     FreeT(T);
     return 0;
 }
