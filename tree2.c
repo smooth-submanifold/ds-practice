@@ -223,6 +223,7 @@ void FreeC(Circle C)
 void LevelPrint(Tree T)
 {
     Circle C;
+    if(!T) return;
     int levelNo=1;
     C=createC(nodes(T)+2);
     enqueue(C,T);
