@@ -131,44 +131,27 @@ Tree build_level(int node)
     return T;
 }
 
-int Findleft(Tree T)
+int JudgeBST(Tree T,int *prev,int *hasPrev)
 {
-    while(T->left){
-        T=T->left;
-    }
-    return T->v;
-}
+    if(!T) return 1;
+    if(!JudgeBST(T->left,prev,hasPrev)) return 0;
 
-void JudgeBST(Tree T,int *p,int *out)
-{
-    if(!T){
-        return;
-    }
-    if(!T->left){
-        *p=T->v;
-    }else{
-        JudgeBST(T->left,p,out);
-        if(*p<T->v){
-            *p=T->v;
-            *out=1;
-        }
-    }
-    JudgeBST(T->right,p,out);
-    return;
+    if(*hasPrev && *prev>=T->v) return 0;
+    *prev=T->v;
+    *hasPrev=1;
+
+    return JudgeBST(T->right,prev,hasPrev);
 }
 
 int main()
 {
     Tree T;
-    int n,judgement=0,res=1;
-    int *p=&judgement,*out=&res;
+    int n;
+    int prev=0, has=0;
 
     scanf("%d",&n);
     T=build_level(n);
-    *p=Findleft(T);
-    JudgeBST(T,p,out);
-    if(res) printf("Yes\n");
-    else printf("No\n");
+    printf("%s\n",JudgeBST(T,&prev,&has) ? "YES" : "NO");
     FreeT(T);
     return 0;
 }
