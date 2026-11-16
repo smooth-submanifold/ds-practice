@@ -33,17 +33,18 @@ int find(int v,int* arr,int front,int rear)
     return -1;//没找到
 }
 
-Tree build(int p_front,int p_rear,int i_front,int i_rear,int *pre,int *in)
+Tree build(int p_front,int i_front,int len,int *pre,int *in)
 {
-    if(p_front>=p_rear || i_front>=i_rear) return NULL;
+    if(len<=0) return NULL;
     int t=pre[p_front];
-    int sep=find(t,in,i_front,i_rear);
+    int sep=find(t,in,i_front,i_front+len);
     if(sep==-1) return NULL;
     Tree T=create();
     T->v=t;
-    int leftLen=sep-i_front;
-    T->left=build(p_front+1,p_front+1+leftLen,i_front,sep,pre,in);
-    T->right=build(p_front+1+leftLen,p_rear,sep+1,i_rear,pre,in);
+    int len_left=sep-i_front;
+    int len_right=len-len_left-1;
+    T->left=build(p_front+1,i_front,len_left,pre,in);
+    T->right=build(p_front+1+len_left,sep+1,len_right,pre,in);
     return T;
 }
 
@@ -52,7 +53,7 @@ void post(Tree T)
     if(!T) return;
     post(T->left);
     post(T->right);
-    printf(" %d",T->v);
+    printf("%d ",T->v);
     return;
 }
 
@@ -77,8 +78,9 @@ int main()
     if(!pre || !in) return 1;
     record(pre,n);
     record(in,n);
-    T=build(0,n,0,n,pre,in);
+    T=build(0,0,n,pre,in);
     post(T);
+    printf("\n");
     Free(T);
     free(pre);
     free(in);
