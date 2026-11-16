@@ -2,6 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 
+typedef struct CircleNode* Circle;
 struct CircleNode//环形队列
 {
     int *arr;
@@ -9,7 +10,6 @@ struct CircleNode//环形队列
     int cap;
     int count;
 };
-typedef struct CircleNode* Circle;
 
 Circle createC(int n)//创建环形队列
 {
