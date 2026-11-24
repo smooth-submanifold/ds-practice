@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define Huffman int
+#define Data int
 
 typedef struct HeapStruct
 {
-    Huffman *item;
+    Data *item;
     int size;
     int cap;
 } *Heap;
@@ -15,7 +15,7 @@ Heap create(int cap)
     Heap h;
     h=(Heap)malloc(sizeof(struct HeapStruct));
     if(!h) return NULL;
-    h->item=(Huffman*)malloc((cap+1)*sizeof(Huffman));
+    h->item=(Data*)malloc((cap+1)*sizeof(Data));
     if(!h->item){
         free(h);
         return NULL;
@@ -46,7 +46,7 @@ void arrange(Heap h)
     if(!h || h->size<=1) return;
     
     for(int i=h->size/2;i>=1;i--){
-        Huffman tmp=h->item[i];
+        Data tmp=h->item[i];
         int t=i;
         while(2*t<=h->size){
             int child=2*t;
@@ -63,7 +63,7 @@ void arrange(Heap h)
     }
 }
 
-void push(Heap h,Huffman v)
+void push(Heap h,Data v)
 {
     if(!h) return;
     if(isFull(h)) return;
@@ -74,11 +74,11 @@ void push(Heap h,Huffman v)
     h->item[t]=v;
 }
 
-int pop(Heap h,Huffman* out)
+int pop(Heap h,Data* out)
 {
     if(!h || isEmpty(h)) return 1;//堆空
     *out=h->item[1];
-    Huffman tmp=h->item[h->size];
+    Data tmp=h->item[h->size];
     int t=1;
     int child;
     for(;2*t<=h->size;t=child){

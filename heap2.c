@@ -2,12 +2,12 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define Huffman int
-#define MaxSize 20000
+#define Data int
+#define MaxSize 200000
 
 typedef struct HeapStruct
 {
-    Huffman *item;
+    Data *item;
     int size;
 } *Heap;
 
@@ -16,7 +16,7 @@ Heap create()
     Heap h;
     h=(Heap)malloc(sizeof(struct HeapStruct));
     if(!h) return NULL;
-    h->item=(Huffman*)malloc(MaxSize*sizeof(Huffman));
+    h->item=(Data*)malloc(MaxSize*sizeof(Data));
     if(!h->item){
         free(h);
         return NULL;
@@ -42,7 +42,7 @@ void arrange(Heap h)
     if(!h || h->size<2) return;
     
     for(int i=h->size/2;i>=1;i--){
-        Huffman tmp=h->item[i];
+        Data tmp=h->item[i];
         int t=i;
         while(2*t<=h->size){
             int child=2*t;
@@ -74,7 +74,7 @@ Heap heapify(int n)
     return h;
 }
 
-void push(Heap h,Huffman v)
+void push(Heap h,Data v)
 {
     if(!h) return;
     if(isFull(h)) return;
@@ -85,11 +85,11 @@ void push(Heap h,Huffman v)
     h->item[t]=v;
 }
 
-Huffman pop(Heap h)
+Data pop(Heap h)
 {
     if(!h || h->size==0) return 0;
-    Huffman v=h->item[1];
-    Huffman tmp=h->item[h->size];
+    Data v=h->item[1];
+    Data tmp=h->item[h->size];
     int t=1;
     while(2*t<=h->size){
         int child=2*t;

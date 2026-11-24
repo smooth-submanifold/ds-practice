@@ -148,13 +148,14 @@ void input(Heap h)
     return;
 }
 
-Huff buildHuff(Heap h)
+int buildHuff(Heap h)
 {
     Huff t;
-    int v;
+    int v,wpl=0;
 
-    if(!h) return NULL;
+    if(!h) return 0;
     arrange(h);
+    int flag=1;
     while(h->size>1){
         t=createT();
         if(!t){
@@ -164,27 +165,32 @@ Huff buildHuff(Heap h)
         pop(h,&t->right);
         v=t->left->w+t->right->w;
         t->w=v;
-        printf("%d ",v);
+        wpl+=v;
+        if(flag==1){
+            printf("%d",v);
+            flag=0;
+        }else{
+            printf(" %d",v);
+        }
         push(h,t);
     }
     t=h->item[1];
     printf("\n");
-    return t;
+    return wpl;
 }
 
 /*---------------主函数--------------*/
 int main()
 {
     Heap h;
-    int n;
-    Huff t;
+    int n,wsl;
 
     if(scanf("%d",&n)!=1) return 0;
     if(n<1) return 0;
     h=createH(n);
     input(h);
-    t=buildHuff(h);
-    printf("%d\n",t->w);
+    wsl=buildHuff(h);
+    printf("%d\n",wsl);
     FreeH(h);
 
     return 0;
