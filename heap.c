@@ -3,7 +3,7 @@
 #include<string.h>
 
 #define Data int
-#define MaxSize 255
+#define MaxSize 20000
 
 typedef struct Heapstruct
 {
@@ -79,8 +79,7 @@ void push(Heap h,Data v)
     if(!h) return;
     if(isFull(h)) return;
     int t=++h->size;
-    h->item[t]=v;
-    for(;t>1 && h->item[t]>h->item[t/2];t/=2){
+    for(;t>1 && v<h->item[t/2];t/=2){
         h->item[t]=h->item[t/2];
     }
     h->item[t]=v;
@@ -110,10 +109,25 @@ Data pop(Heap h)
 
 void printHeap(Heap h)
 {
-    for(int i=1;i<=h->size;i++){
-        printf("%d ",h->item[i]);
+    if(!h || h->size==0) return;
+    printf("%d",h->item[1]);
+    if(h->size==1) return;
+    for(int i=2;i<=h->size;i++){
+        printf(" %d",h->item[i]);
     }
     printf("\n");
+    return;
+}
+
+void test(Heap h)
+{
+    for(int i=0;i<10000;i++){
+        push(h,i);
+    }
+    for(int i=0;i<10000;i++){
+        pop(h);
+    }
+    printHeap(h);
     return;
 }
 
@@ -139,13 +153,15 @@ int main()
             }
             push(h,v);
         }else if(strcmp(oper,"pop")==0){
+            if(!h) break;
             v=pop(h);
             printf("%d\n",v);
         }else if(strcmp(oper,"print")==0){
             printHeap(h);
         }
     }
+    
+    test(h);
     Free(h);
-
     return 0;
 }
